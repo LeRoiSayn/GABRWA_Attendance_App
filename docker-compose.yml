@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: visitor_management
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      PORT: 5001
+      NODE_ENV: production
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: visitor_management
+      DB_USER: postgres
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRES_IN: 8h
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@company.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      APP_HOST: ${APP_HOST}
+      ALLOWED_ORIGINS: http://${APP_HOST}:3000,http://localhost:3000
+      RATE_LIMIT_MAX: 2000
+      RATE_LIMIT_WINDOW_MS: 900000
+      LOGIN_RATE_LIMIT_MAX: 20
+    volumes:
+      - uploads:/app/../uploads
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  uploads:
