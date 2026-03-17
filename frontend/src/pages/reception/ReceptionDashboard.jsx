@@ -182,7 +182,7 @@ export default function ReceptionDashboard() {
                                      max-w-[150px] truncate block text-left transition-colors duration-150"
                           title={v.purpose}
                         >
-                          {v.purpose.length > 35 ? v.purpose.slice(0, 35) + '…' : v.purpose}
+                          {(v.purpose?.length > 35) ? v.purpose.slice(0, 35) + '…' : (v.purpose || '—')}
                         </button>
                         {v.host_name && <p className="text-xs text-slate-400 mt-0.5">{v.host_name}</p>}
                       </td>
@@ -255,10 +255,12 @@ export default function ReceptionDashboard() {
           </div>
           <dl className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
             {[
-              ['Visiteur',  detailVisit.visitor?.full_name],
-              ['Téléphone', detailVisit.visitor?.phone],
-              ['Email',     detailVisit.visitor?.email || '—'],
-              ['Hôte',      detailVisit.host_name || '—'],
+              ['Visiteur',    detailVisit.visitor?.full_name],
+              ['Téléphone',   detailVisit.visitor?.phone],
+              ['Passeport',   detailVisit.visitor?.passport_number || '—'],
+              ['Nationalité', detailVisit.visitor?.nationality || '—'],
+              ['Quartier',    detailVisit.visitor?.address || '—'],
+              ['Hôte',        detailVisit.host_name || '—'],
             ].map(([k, val]) => (
               <div key={k}>
                 <dt className="text-[11px] text-slate-400 uppercase tracking-wider mb-0.5">{k}</dt>

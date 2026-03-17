@@ -8,6 +8,7 @@ export default function VisitorModal({ onClose, onCreated }) {
     phone: "",
     email: "",
     passport_number: "",
+    nationality: "",
     visitor_number: "",
     address: "",
   });
@@ -124,6 +125,18 @@ export default function VisitorModal({ onClose, onCreated }) {
               />
             </div>
             <div className="field">
+              <label>Nationalité *</label>
+              <input
+                className="input"
+                required
+                value={form.nationality}
+                onChange={(e) =>
+                  setForm({ ...form, nationality: e.target.value })
+                }
+                placeholder="ex: Rwandaise"
+              />
+            </div>
+            <div className="field">
               <label>N° de visiteur *</label>
               <input
                 className="input"
@@ -134,8 +147,8 @@ export default function VisitorModal({ onClose, onCreated }) {
                 }
               />
             </div>
-            <div className="field sm:col-span-2">
-              <label>Adresse</label>
+            <div className="field">
+              <label>Quartier</label>
               <input
                 className="input"
                 value={form.address}

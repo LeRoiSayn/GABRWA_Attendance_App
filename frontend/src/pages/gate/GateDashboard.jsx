@@ -182,7 +182,7 @@ export default function GateDashboard() {
                                    max-w-[140px] truncate block text-left transition-colors duration-150"
                         title={v.purpose}
                       >
-                        {v.purpose.length > 35 ? v.purpose.slice(0, 35) + '…' : v.purpose}
+                        {(v.purpose?.length > 35) ? v.purpose.slice(0, 35) + '…' : (v.purpose || '—')}
                       </button>
                     </td>
                     <td><StatusBadge status={v.status} /></td>
@@ -260,6 +260,9 @@ export default function GateDashboard() {
             {[
               ['Visiteur',         detailVisit.visitor?.full_name],
               ['Téléphone',        detailVisit.visitor?.phone],
+              ['Passeport',        detailVisit.visitor?.passport_number || '—'],
+              ['Nationalité',      detailVisit.visitor?.nationality || '—'],
+              ['Quartier',         detailVisit.visitor?.address || '—'],
               ['Personne visitée', detailVisit.host_name || '—'],
               ['Statut',           <StatusBadge key="s" status={detailVisit.status} />],
             ].map(([k, v]) => (

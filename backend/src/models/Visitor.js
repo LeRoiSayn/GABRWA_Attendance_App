@@ -23,6 +23,11 @@ const Visitor = sequelize.define('Visitor', {
     allowNull: true,
     defaultValue: '',
   },
+  nationality: {
+    type: DataTypes.STRING(100),
+    allowNull: true,
+    defaultValue: '',
+  },
   visitor_number: {
     type: DataTypes.STRING(50),
     allowNull: true,

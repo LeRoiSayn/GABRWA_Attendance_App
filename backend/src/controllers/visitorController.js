@@ -43,8 +43,8 @@ exports.listAll = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const { full_name, phone, email, passport_number, visitor_number, address } = req.body;
-    const visitor = await Visitor.create({ full_name, phone, email: email || null, passport_number, visitor_number, address });
+    const { full_name, phone, email, passport_number, nationality, visitor_number, address } = req.body;
+    const visitor = await Visitor.create({ full_name, phone, email: email || null, passport_number, nationality, visitor_number, address });
     res.status(201).json(visitor);
   } catch (err) {
     res.status(500).json({ message: 'Erreur serveur', error: err.message });
@@ -95,8 +95,8 @@ exports.update = async (req, res) => {
   try {
     const visitor = await Visitor.findByPk(req.params.id);
     if (!visitor) return res.status(404).json({ message: 'Visiteur non trouvé' });
-    const { full_name, phone, email, passport_number, visitor_number, address } = req.body;
-    await visitor.update({ full_name, phone, email: email || null, passport_number, visitor_number, address });
+    const { full_name, phone, email, passport_number, nationality, visitor_number, address } = req.body;
+    await visitor.update({ full_name, phone, email: email || null, passport_number, nationality, visitor_number, address });
     res.json(visitor);
   } catch (err) {
     res.status(500).json({ message: 'Erreur serveur', error: err.message });

@@ -23,14 +23,7 @@ const PrivateRoute = ({ children, roles, access }) => {
   return children;
 };
 
-const HomeRedirect = () => {
-  const { user } = useAuth();
-  if (!user) return <Navigate to="/login" replace />;
-  if (user.role === 'admin') return <Navigate to="/admin" replace />;
-  if (user.role === 'gate') return <Navigate to="/gate" replace />;
-  if (user.role === 'reception') return <Navigate to="/reception" replace />;
-  return <Navigate to="/login" replace />;
-};
+const HomeRedirect = () => <Navigate to="/login" replace />;
 
 export default function App() {
   return (
