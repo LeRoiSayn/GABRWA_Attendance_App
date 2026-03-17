@@ -5,28 +5,28 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('user')); } catch { return null; }
+    try { return JSON.parse(sessionStorage.getItem('user')); } catch { return null; }
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (!token) { setLoading(false); return; }
     getMe()
       .then((res) => setUser(res.data.user))
-      .catch(() => { localStorage.removeItem('token'); localStorage.removeItem('user'); setUser(null); })
+      .catch(() => { sessionStorage.removeItem('token'); sessionStorage.removeItem('user'); setUser(null); })
       .finally(() => setLoading(false));
   }, []);
 
   const saveAuth = (token, userData) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(userData));
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('user', JSON.stringify(userData));
     setUser(userData);
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
     setUser(null);
   };
 
